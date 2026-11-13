@@ -11,6 +11,23 @@ Open `http://localhost:5173/`. Build with `npm run build`, then serve `dist/` fr
 
 The service worker, manifest, React bundle, QR generator, and icons are local. After the first load, the app does not require the internet. UPI QR generation is local; it does not verify or handle payments.
 
+## Optional MongoDB sync
+
+The PWA remains offline-first: IndexedDB is the local source of truth. An optional Node/Express API synchronizes authenticated profiles and records to MongoDB when internet is available.
+
+1. Copy `server/.env.example` to `server/.env`.
+2. Set `MONGODB_URI`, `MONGODB_DB`, a long random `JWT_SECRET`, and `WEB_ORIGIN`.
+3. Install and start the API:
+
+   ```powershell
+   npm install --prefix server
+   npm run server:dev
+   ```
+
+4. Set `VITE_API_URL=http://localhost:4000` in the frontend environment before `npm run dev` or `npm run build`.
+
+The API stores accounts, profiles, and profile-scoped records in separate MongoDB collections. PINs are bcrypt-hashed on the server; the browser never sends or stores a MongoDB credential. If the API is unavailable, local IndexedDB operations continue and sync retries when the device is online.
+
 ## GitHub Pages
 
 Pushes to `main` deploy automatically through GitHub Actions. The project-site URL is:
