@@ -11,6 +11,14 @@ Open `http://localhost:5173/`. Build with `npm run build`, then serve `dist/` fr
 
 The service worker, manifest, React bundle, QR generator, and icons are local. After the first load, the app does not require the internet. UPI QR generation is local; it does not verify or handle payments.
 
+## GitHub Pages
+
+Pushes to `main` deploy automatically through GitHub Actions. The project-site URL is:
+
+`https://krishanh471-create.github.io/Apna-Vyapar/`
+
+In the repository settings, set **Pages → Source** to **GitHub Actions**.
+
 UPI ID and payee name are saved per profile in the catalog database. QR generation creates a profile-scoped pending UPI payment; the owner must tap **Payment received / Mark as paid** after checking their own UPI app. Only paid payments dated in Asia/Kolkata's current day contribute to Today's collection.
 
 ## Business isolation

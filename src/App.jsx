@@ -65,7 +65,7 @@ function App() {
         setMode("app");
       } else setMode(saved.length ? "login" : "setup");
       if (navigator.storage?.persist) navigator.storage.persist();
-      if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(() => {});
+      if ("serviceWorker" in navigator) navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`).catch(() => {});
     })();
   }, []);
   useEffect(() => {

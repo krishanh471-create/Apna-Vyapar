@@ -1,6 +1,8 @@
-const CACHE = "apna-vyapar-v6";
+const CACHE = "apna-vyapar-v7";
+const BASE = self.registration.scope;
+const INDEX = `${BASE}index.html`;
 self.addEventListener("install", (event) => event.waitUntil(
-  caches.open(CACHE).then((cache) => cache.addAll(["/", "/index.html", "/manifest.webmanifest"])).then(() => self.skipWaiting())
+  caches.open(CACHE).then((cache) => cache.addAll([BASE, INDEX, `${BASE}manifest.webmanifest`])).then(() => self.skipWaiting())
 ));
 self.addEventListener("activate", (event) => event.waitUntil(
   caches.keys().then((keys) => Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key)))).then(() => self.clients.claim())
@@ -13,5 +15,5 @@ self.addEventListener("fetch", (event) => event.respondWith(
     const copy = response.clone();
     caches.open(CACHE).then((cache) => cache.put(event.request, copy));
     return response;
-  }).catch(() => caches.match("/index.html")))
+  }).catch(() => caches.match(INDEX)))
 ));
